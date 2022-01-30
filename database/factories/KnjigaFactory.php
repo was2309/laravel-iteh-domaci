@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Pisac;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 class KnjigaFactory extends Factory
 {
@@ -14,7 +16,12 @@ class KnjigaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'naslov'=>$this->faker->word(),
+            'zanr'=>$this->faker->word(),
+            'user_id'=>User::factory(),
+            'pisac_id'=>Pisac::factory(),
+            'kategorija_id'=>$this->faker->numberBetween(1,9),
+            'ISBN'=>$this->faker->regexify('([1-9][1-9][1-9][1-9]-){4}')
         ];
     }
 }

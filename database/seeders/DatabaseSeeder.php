@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Kategorija;
+use App\Models\Knjiga;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
+use \App\Models\Pisac;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,22 +19,15 @@ class DatabaseSeeder extends Seeder
     {
         Kategorija::truncate();
         User::truncate();
+        Knjiga::truncate();
+        Pisac::truncate();
 
-
-
-         $user = User::factory(10)->create();
-
-         $kat1 = Kategorija::create([
-             'naziv' => 'Romani'
-         ]);
-
-         $kat2 = Kategorija::create([
-            'naziv' => 'Basne'
+        $this->call([
+            KategorijaSeeder::class
         ]);
 
-        $kat3 = Kategorija::create([
-            'naziv' => 'Pripovetke'
-        ]);
+
+         Knjiga::factory(10)->create();
 
 
 
