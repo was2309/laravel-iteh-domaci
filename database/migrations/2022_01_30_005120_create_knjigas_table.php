@@ -16,7 +16,7 @@ class CreateKnjigasTable extends Migration
         Schema::create('knjigas', function (Blueprint $table) {
             $table->id();
             $table->string('naslov');
-            $table->string('zanr');
+            $table->string('izdavac');
             $table->string('ISBN');
             $table->foreignId('pisac_id');
             $table->foreignId('user_ID');

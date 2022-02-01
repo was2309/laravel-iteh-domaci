@@ -11,7 +11,7 @@ class Knjiga extends Model
 
     protected $fillable = [
         'naslov',
-        'zanr',
+        'izdavac',
         'ISBN'
     ];
 

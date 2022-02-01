@@ -3,6 +3,7 @@
 use App\Http\Controllers\KategorijaController;
 use App\Http\Controllers\KnjigaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +33,36 @@ Route::resource('knjige',KnjigaController::class);
 Route::get('knjige/pisac/{id}',[KnjigaController::class, 'getByPisac']);
 
 Route::get('knjige/kategorija/{id}', [KnjigaController::class, 'getByKategorija']);
+
+
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    Route::get('moje-Knjige',[KnjigaController::class,'mojeKnjige']);
+
+    // Route::post('dodaj-Knjigu',[BookController::class,'store']);
+
+    // Route::post('azuriraj-Knjigu/{id}',[BookController::class,'update']);
+
+    // Route::delete('/obrisi-Knjigu/{id}',[BookController::class,'destroy']);
+
+    Route::get('/logout',[AuthController::class,'logout']);
+
+    Route::resource('knjige',KnjigaController::class)->only('store','update','destroy');
+
+});
+
+
+
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/login',[AuthController::class,'login']);
+
+Route::post('/kategorija',[KategorijaController::class, 'store']);
+
 
 
