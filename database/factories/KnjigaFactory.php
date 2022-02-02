@@ -17,7 +17,7 @@ class KnjigaFactory extends Factory
     {
         return [
             'naslov'=>$this->faker->word(),
-            'zanr'=>$this->faker->word(),
+            'izdavac'=>$this->faker->word(),
             'user_id'=>User::factory(),
             'pisac_id'=>Pisac::factory(),
             'kategorija_id'=>$this->faker->numberBetween(1,9),

@@ -28,7 +28,7 @@ Route::post('/kategorija',[KategorijaController::class, 'store']);
 
 Route::resource('users',UserController::class);
 
-Route::resource('knjige',KnjigaController::class);
+  Route::resource('knjige',KnjigaController::class);
 
 Route::get('knjige/pisac/{id}',[KnjigaController::class, 'getByPisac']);
 
@@ -42,15 +42,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
 
-    Route::get('moje-Knjige',[KnjigaController::class,'mojeKnjige']);
+    Route::get('moje-knjige',[KnjigaController::class,'mojeKnjige']);
 
-    // Route::post('dodaj-Knjigu',[BookController::class,'store']);
+     //Route::post('dodaj-Knjigu',[KnjigaController::class,'store']);
 
     // Route::post('azuriraj-Knjigu/{id}',[BookController::class,'update']);
 
     // Route::delete('/obrisi-Knjigu/{id}',[BookController::class,'destroy']);
 
     Route::get('/logout',[AuthController::class,'logout']);
+
+    
 
     Route::resource('knjige',KnjigaController::class)->only('store','update','destroy');
 

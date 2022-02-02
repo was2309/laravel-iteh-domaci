@@ -24,7 +24,7 @@ class KnjigaController extends Controller
        foreach($knjige as $knjiga){
            array_push($mojeKnjige,new KnjigaResource($knjiga));
        }
-
+      
        return $mojeKnjige;
     }
 
@@ -51,7 +51,8 @@ class KnjigaController extends Controller
             'izdavac'=>'required|String|max:255',
             'ISBN'=>'required|String|max:255',
             'pisac_id'=>'required',
-            'kategorija_id'=>'required'
+            'kategorija_id'=>'required',
+            //'user_id'=>'required'
         ]);
 
         if($validator->fails()){
@@ -64,6 +65,7 @@ class KnjigaController extends Controller
         $knjiga->ISBN = $request->ISBN;
         $knjiga->pisac_id= $request->pisac_id;
         $knjiga->kategorija_id = $request->kategorija_id;
+        $knjiga->user_id=Auth::user()->id;
 
         $knjiga->save();
 
@@ -77,9 +79,10 @@ class KnjigaController extends Controller
      * @param  \App\Models\Knjiga  $knjiga
      * @return \Illuminate\Http\Response
      */
-    public function show(Knjiga $knjiga)
+    public function show(Knjiga $knjige)
     {
-          return new KnjigaResource($knjiga);
+         
+          return new KnjigaResource($knjige);
     }
 
     public function getByPisac($pisac_id){
@@ -99,7 +102,7 @@ class KnjigaController extends Controller
     }
 
     public function mojeKnjige(Request $request){
-        $knjige=Knjiga::get()->where('user_ID', Auth::user()->id);
+        $knjige=Knjiga::get()->where('user_id', Auth::user()->id);
         if(count($knjige)==0){
             return 'Nemate sacuvanih knjiga!';
         }
@@ -126,16 +129,7 @@ class KnjigaController extends Controller
 
         return $mojeKnjige;
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Knjiga  $knjiga
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Knjiga $knjiga)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
@@ -144,35 +138,39 @@ class KnjigaController extends Controller
      * @param  \App\Models\Knjiga  $knjiga
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Knjiga $knjiga)
+
+   
+    public function update(Request $request, Knjiga $knjige)
     {
         $validator=Validator::make($request->all(),[
             'naslov'=>'required|String|max:255',
             'izdavac'=>'required|String|max:255',
             'ISBN'=>'required|String|max:255',
             'pisac_id'=>'required',
-            'kategorija_id'=>'required'
+            'kategorija_id'=>'required',
+            //'user_id'=>'required'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors());
         }
 
-        $knjiga = new Knjiga;
-        $knjiga->naslov = $request->naslov;
-        $knjiga->izdavac=$request->izdavac;
-        $knjiga->ISBN = $request->ISBN;
-        $knjiga->pisac_id= $request->pisac_id;
-        $knjiga->kategorija_id = $request->kategorija_id;
-        $knjiga->user_ID = Auth::user()->id;
+        //print($knjiga);
 
-        $result = $knjiga->update();
+        $knjige->naslov = $request->naslov;
+        $knjige->izdavac=$request->izdavac;
+        $knjige->ISBN = $request->ISBN;
+        $knjige->pisac_id= $request->pisac_id;
+        $knjige->kategorija_id = $request->kategorija_id;
+        $knjige->user_id = Auth::user()->id;
+
+        $result = $knjige->update();
 
         if($result==false){
             return response()->json('Problem prilikom azuriranja knjige!');
         }
 
-        return response()->json(['Knjiga je uspesno azurirana!', new KnjigaResource($knjiga)]);
+        return response()->json(['Knjiga je uspesno azurirana!', new KnjigaResource($knjige)]);
     }
 
     /**
@@ -181,10 +179,11 @@ class KnjigaController extends Controller
      * @param  \App\Models\Knjiga  $knjiga
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Knjiga $knjiga)
+    public function destroy(Knjiga $knjige)
     {
-        $knjiga->delete();
+        print($knjige);
+        $knjige->delete();
 
-        return response()->json('Knjiga '.$knjiga->naslov .'je uspesno obrisana!');
+        return response()->json('Knjiga '.$knjige->naslov .'je uspesno obrisana!');
     }
 }

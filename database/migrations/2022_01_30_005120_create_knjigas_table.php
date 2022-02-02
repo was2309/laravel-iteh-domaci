@@ -19,7 +19,7 @@ class CreateKnjigasTable extends Migration
             $table->string('izdavac');
             $table->string('ISBN');
             $table->foreignId('pisac_id');
-            $table->foreignId('user_ID');
+            $table->foreignId('user_id');
             $table->foreignId('kategorija_id');
             $table->timestamps();
 

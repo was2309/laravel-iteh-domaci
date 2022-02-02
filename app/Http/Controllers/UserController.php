@@ -56,6 +56,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        print($user);
+        
        return new UserResource($user);
     }
 

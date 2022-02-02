@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Knjiga extends Model
 {
-    use HasFactory;
+    use  HasFactory;
 
     protected $fillable = [
         'naslov',

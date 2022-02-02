@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use App\Models\Pisac;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\KategorijaResource;
+use App\Http\Resources\PisacResource;
+use App\Http\Resources\UserResource;
 
 class KnjigaResource extends JsonResource
 {
@@ -13,13 +16,14 @@ class KnjigaResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    public static $wrap='knjiga';
     public function toArray($request)
     {
         return [
             'naslov'=>$this->resource->naslov,
-            'zanr'=>$this->resource->zanr,
-            'kategorija'=> new KategorijaResource($this->resource->kategorija),
-            'pisac'=> new PisacResource($this->resource->pisac),
+            'izdavac'=>$this->resource->izdavac,
+            'kategorija_id'=> new KategorijaResource($this->resource->kategorija),
+            'pisac_id'=> new PisacResource($this->resource->pisac),
             'user'=> new UserResource($this->resource->user)
         ];
     }
